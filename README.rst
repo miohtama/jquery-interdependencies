@@ -131,11 +131,11 @@ Install jsduck::
 Build docs::
 
     source /Users/mikko/.rvm/scripts/rvm
-    make docs
+    make build-docs
 
 Deploy docs::
 
-    make deploy-docs
+    make publish-docs
 
 Author
 ------
