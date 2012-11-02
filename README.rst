@@ -8,6 +8,10 @@ create rules for managing HTML form field interdependencies.
 It is a helper library for building complex conditional forms
 where fields are shown and hidden depending on values in other fields.
 
+Use simple Javascript based rules to express dependencies between different fields:
+
+.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/interdependencies.png
+
 Features
 ---------
 
