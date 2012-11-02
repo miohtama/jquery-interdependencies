@@ -10,291 +10,314 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+        <style>
+            .level2 {
+                margin-left: 20px;
+            }
+
+            .level3 {
+                margin-left: 40px;
+            }
+        </style>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <h1>jQuery field inter-dependencies demo</h1>
+        <div class="container">
 
-        <div id="demo-content">
+            <h1>jQuery field inter-dependencies demo</h1>
 
-            <p>These fields make more sense when you have major in neurology</p>
+            <div id="demo-content">
 
-            <p id="two-attemps-test">
-                This label becomes visible when number of attempts is 2.
-            </p>
+                <p>These fields make more sense when you have major in neurology</p>
 
-            <p id="three-attemps-test">
-                This label becomes visible when number of attempts is 3.
-            </p>
-
-            <div class="datagridwidget-block-mechanicalThrombectomyDevice select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="mechanicalThrombectomyDevice">
-                        <span>Mechanical thrombectomy device</span>
-
-                    </label>
+                <div id="two-attempts-test" class="alert">
+                    This pop-up becomes visible when number of attempts is 2.
                 </div>
 
-                <select size="1" class="select-widget choice-field" name="mechanicalThrombectomyDevice" id="mechanicalThrombectomyDevice">
-                    <option value="--NOVALUE--" id="mechanicalThrombectomyDevice-novalue">no value</option>
-                    <option value="merci" id="mechanicalThrombectomyDevice-0">MERCI &reg;   </option>
-                    <option value="penumbra" id="mechanicalThrombectomyDevice-1">Penumbra &reg;</option>
-                    <option value="trevo" id="mechanicalThrombectomyDevice-2">Trevo &reg;</option>
-                    <option value="snare" id="mechanicalThrombectomyDevice-3">Snare</option>
-                    <option value="solitaire" id="mechanicalThrombectomyDevice-4">Solitaire</option>
-                    <option value="captureh" id="mechanicalThrombectomyDevice-5">Captureh</option>
-                    <option value="revive" id="mechanicalThrombectomyDevice-6">Revive</option>
-                    <option value="bonnet" id="mechanicalThrombectomyDevice-7">Bonnet</option>
-                    <option value="other" id="mechanicalThrombectomyDevice-8">Other</option>
-                    <option value="noDevice" id="mechanicalThrombectomyDevice-9">No device</option>
-                    <option value="notApplicable" id="mechanicalThrombectomyDevice-10">Not applicable</option>
-                </select>
-                <input type="hidden" value="1" name="mechanicalThrombectomyDevice-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-dac select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="dac">
-                        <span>Distal access catheter (DAC)</span>
-
-                    </label>
+                <div id="three-attempts-test" class="alert alert-error">
+                    This serious pop-up becomes visible when number of attempts is 3.
                 </div>
 
-                <select size="1" class="select-widget choice-field" name="dac" id="dac">
-                    <option value="--NOVALUE--" id="dac-novalue">no value</option>
-                    <option value="yes" id="dac-0">Yes</option>
-                    <option value="no" id="dac-1">No</option>
-                    <option value="unknown" id="dac-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="dac-empty-marker" originalvalue="1"></div>
+                <div class="datagridwidget-block-mechanicalThrombectomyDevice select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="mechanicalThrombectomyDevice">
+                            <span>Mechanical thrombectomy device</span>
 
-            <div class="datagridwidget-block-numberOfAttempts text-widget int-field datagridwidget-block">
-                <div class="label">
-                    <label for="numberOfAttempts">
-                        <span>Number of attempts</span>
+                        </label>
+                    </div>
 
-                    </label>
+                    <select size="1" class="select-widget choice-field" name="mechanicalThrombectomyDevice" id="mechanicalThrombectomyDevice">
+                        <option value="--NOVALUE--" id="mechanicalThrombectomyDevice-novalue">no value</option>
+                        <option value="merci" id="mechanicalThrombectomyDevice-0">MERCI &reg;   </option>
+                        <option value="penumbra" id="mechanicalThrombectomyDevice-1">Penumbra &reg;</option>
+                        <option value="trevo" id="mechanicalThrombectomyDevice-2">Trevo &reg;</option>
+                        <option value="snare" id="mechanicalThrombectomyDevice-3">Snare</option>
+                        <option value="solitaire" id="mechanicalThrombectomyDevice-4">Solitaire</option>
+                        <option value="captureh" id="mechanicalThrombectomyDevice-5">Captureh</option>
+                        <option value="revive" id="mechanicalThrombectomyDevice-6">Revive</option>
+                        <option value="bonnet" id="mechanicalThrombectomyDevice-7">Bonnet</option>
+                        <option value="other" id="mechanicalThrombectomyDevice-8">Other</option>
+                        <option value="noDevice" id="mechanicalThrombectomyDevice-9">No device</option>
+                        <option value="notApplicable" id="mechanicalThrombectomyDevice-10">Not applicable</option>
+                    </select>
+                    <input type="hidden" value="1" name="mechanicalThrombectomyDevice-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-dac select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="dac">
+                            <span>Distal access catheter (DAC)</span>
+
+                        </label>
+                    </div>
+
+                    <select size="1" class="select-widget choice-field" name="dac" id="dac">
+                        <option value="--NOVALUE--" id="dac-novalue">no value</option>
+                        <option value="yes" id="dac-0">Yes</option>
+                        <option value="no" id="dac-1">No</option>
+                        <option value="unknown" id="dac-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="dac-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-numberOfAttempts text-widget int-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="numberOfAttempts">
+                            <span>Number of attempts</span>
+
+                        </label>
+                    </div>
+
+                    <input type="text" value="" class="text-widget int-field" name="numberOfAttempts" id="numberOfAttempts">
+                    <span class="help-inline">Try setting value to 2 or 3</span>
                 </div>
 
-                <input type="text" value="" class="text-widget int-field" name="numberOfAttempts" id="numberOfAttempts"></div>
+                <div class="datagridwidget-block-balloonGuide select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="balloonGuide">
+                            <span>Balloon guide</span>
 
-            <div class="datagridwidget-block-balloonGuide select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="balloonGuide">
-                        <span>Balloon guide</span>
+                        </label>
+                    </div>
 
-                    </label>
+                    <select size="1" class="select-widget choice-field" name="balloonGuide" id="balloonGuide">
+                        <option value="--NOVALUE--" id="balloonGuide-novalue">no value</option>
+                        <option value="yes" id="balloonGuide-0">Yes</option>
+                        <option value="no" id="balloonGuide-1">No</option>
+                        <option value="unknown" id="balloonGuide-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="balloonGuide-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-aspirationInGuideDuringThrombectomy select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="aspirationInGuideDuringThrombectomy">
+                            <span>Aspiration in guide during thrombectomy</span>
+
+                        </label>
+                    </div>
+
+                    <select size="1" class="select-widget choice-field" name="aspirationInGuideDuringThrombectomy" id="aspirationInGuideDuringThrombectomy">
+                        <option value="--NOVALUE--" id="aspirationInGuideDuringThrombectomy-novalue">no value</option>
+                        <option value="yes" id="aspirationInGuideDuringThrombectomy-0">Yes</option>
+                        <option value="no" id="aspirationInGuideDuringThrombectomy-1">No</option>
+                        <option value="unknown" id="aspirationInGuideDuringThrombectomy-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="aspirationInGuideDuringThrombectomy-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-delayedReocclusion select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="delayedReocclusion">
+                            <span>Delayed reocclusion (5 - 10 min)</span>
+
+                        </label>
+                    </div>
+
+                    <select size="1" class="select-widget choice-field" name="delayedReocclusion" id="delayedReocclusion">
+                        <option value="--NOVALUE--" id="delayedReocclusion-novalue">no value</option>
+                        <option value="yes" id="delayedReocclusion-0">Yes</option>
+                        <option value="no" id="delayedReocclusion-1">No</option>
+                        <option value="unknown" id="delayedReocclusion-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="delayedReocclusion-empty-marker" originalvalue="1">
+
+                    <div class="formHelp">
+                        After initially successful thrombectomy (indicating atherosclerotic vessel segment or dissection
+                    </div>
+
                 </div>
 
-                <select size="1" class="select-widget choice-field" name="balloonGuide" id="balloonGuide">
-                    <option value="--NOVALUE--" id="balloonGuide-novalue">no value</option>
-                    <option value="yes" id="balloonGuide-0">Yes</option>
-                    <option value="no" id="balloonGuide-1">No</option>
-                    <option value="unknown" id="balloonGuide-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="balloonGuide-empty-marker" originalvalue="1"></div>
+                <div class="datagridwidget-block-incubationOfDevice select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="incubationOfDevice">
+                            <span>Incubation of device ≥ 5 min</span>
 
-            <div class="datagridwidget-block-aspirationInGuideDuringThrombectomy select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="aspirationInGuideDuringThrombectomy">
-                        <span>Aspiration in guide during thrombectomy</span>
+                        </label>
+                    </div>
 
-                    </label>
-                </div>
+                    <select size="1" class="select-widget choice-field" name="incubationOfDevice" id="incubationOfDevice">
+                        <option value="--NOVALUE--" id="incubationOfDevice-novalue">no value</option>
+                        <option value="yes" id="incubationOfDevice-0">Yes</option>
+                        <option value="no" id="incubationOfDevice-1">No</option>
+                        <option value="unknown" id="incubationOfDevice-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="incubationOfDevice-empty-marker" originalvalue="1"></div>
 
-                <select size="1" class="select-widget choice-field" name="aspirationInGuideDuringThrombectomy" id="aspirationInGuideDuringThrombectomy">
-                    <option value="--NOVALUE--" id="aspirationInGuideDuringThrombectomy-novalue">no value</option>
-                    <option value="yes" id="aspirationInGuideDuringThrombectomy-0">Yes</option>
-                    <option value="no" id="aspirationInGuideDuringThrombectomy-1">No</option>
-                    <option value="unknown" id="aspirationInGuideDuringThrombectomy-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="aspirationInGuideDuringThrombectomy-empty-marker" originalvalue="1"></div>
+                <div class="datagridwidget-block-angioplasty select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="angioplasty">
+                            <span>Angioplasty</span>
 
-            <div class="datagridwidget-block-delayedReocclusion select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="delayedReocclusion">
-                        <span>Delayed reocclusion (5 - 10 min)</span>
+                        </label>
+                    </div>
 
-                    </label>
-                </div>
+                    <select size="1" class="select-widget choice-field" name="angioplasty" id="angioplasty">
+                        <option value="--NOVALUE--" id="angioplasty-novalue">no value</option>
+                        <option value="yes" id="angioplasty-0">Yes</option>
+                        <option value="no" id="angioplasty-1">No</option>
+                        <option value="unknown" id="angioplasty-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="angioplasty-empty-marker" originalvalue="1"></div>
 
-                <select size="1" class="select-widget choice-field" name="delayedReocclusion" id="delayedReocclusion">
-                    <option value="--NOVALUE--" id="delayedReocclusion-novalue">no value</option>
-                    <option value="yes" id="delayedReocclusion-0">Yes</option>
-                    <option value="no" id="delayedReocclusion-1">No</option>
-                    <option value="unknown" id="delayedReocclusion-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="delayedReocclusion-empty-marker" originalvalue="1">
+                <div class="datagridwidget-block-angioplastyExtraCranial single-checkbox-widget bool-field datagridwidget-block level2">
+                    <div class="label-wrapper">
+                        <label for="angioplastyExtraCranial">
+                            <span></span>
+                        </label>
+                    </div>
 
-                <div class="formHelp">
-                    After initially successful thrombectomy (indicating atherosclerotic vessel segment or dissection
-                </div>
+                    <span class="option">
+                        <label for="angioplastyExtraCranial-0" class="checkbox">
+                            <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="angioplastyExtraCranial" id="angioplastyExtraCranial-0">
+
+                            <span>Extra Cranial</span>
+                        </label>
+                    </span>
+                    <input type="hidden" value="1" name="angioplastyExtraCranial-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-angioplastyIntraCranial single-checkbox-widget bool-field datagridwidget-block level2">
+                    <div class="label-wrapper">
+                        <label for="angioplastyIntraCranial">
+                            <span></span>
+
+                        </label>
+                    </div>
+
+                    <span class="option">
+                        <label for="angioplastyIntraCranial-0">
+
+                            <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="angioplastyIntraCranial" id="angioplastyIntraCranial-0">
+
+                            <span>Intra Cranial</span>
+                        </label>
+                    </span>
+                    <input type="hidden" value="1" name="angioplastyIntraCranial-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-adjunctiveStenting select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="adjunctiveStenting">
+                            <span>Adjunctive stenting</span>
+
+                        </label>
+                    </div>
+
+                    <select size="1" class="select-widget choice-field" name="adjunctiveStenting" id="adjunctiveStenting">
+                        <option value="--NOVALUE--" id="adjunctiveStenting-novalue">no value</option>
+                        <option value="yes" id="adjunctiveStenting-0">Yes</option>
+                        <option value="no" id="adjunctiveStenting-1">No</option>
+                        <option value="unknown" id="adjunctiveStenting-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="adjunctiveStenting-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-adjunctiveStentingExtraCranial single-checkbox-widget bool-field datagridwidget-block level2">
+                    <div class="label-wrapper">
+                        <label for="adjunctiveStentingExtraCranial">
+                            <span></span>
+
+                        </label>
+                    </div>
+
+                    <span class="option">
+                        <label for="adjunctiveStentingExtraCranial-0">
+
+                            <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="adjunctiveStentingExtraCranial" id="adjunctiveStentingExtraCranial-0">
+
+                            <span>Extra Cranial</span>
+                        </label>
+                    </span>
+                    <input type="hidden" value="1" name="adjunctiveStentingExtraCranial-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-adjunctiveStentingExtraCranialType text-widget textline-field datagridwidget-block level3">
+                    <div class="label-wrapper">
+                        <label for="adjunctiveStentingExtraCranialType">
+                            <span>Which type</span>
+
+                        </label>
+                    </div>
+
+                    <input type="text" value="" class="text-widget textline-field" name="adjunctiveStentingExtraCranialType" id="adjunctiveStentingExtraCranialType"></div>
+
+                <div class="datagridwidget-block-adjunctiveStentingIntraCranial single-checkbox-widget bool-field datagridwidget-block level2">
+                    <div class="label-wrapper">
+                        <label for="adjunctiveStentingIntraCranial">
+                            <span></span>
+
+                        </label>
+                    </div>
+
+                    <span class="option">
+                        <label for="adjunctiveStentingIntraCranial-0">
+
+                            <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="adjunctiveStentingIntraCranial" id="adjunctiveStentingIntraCranial-0">
+
+
+                            <span>Intra Cranial</span>
+                        </label>
+                    </span>
+                    <input type="hidden" value="1" name="adjunctiveStentingIntraCranial-empty-marker" originalvalue="1"></div>
+
+                <div class="datagridwidget-block-adjunctiveStentingIntraCranialType text-widget textline-field datagridwidget-block level3">
+                    <div class="label-wrapper">
+                        <label for="adjunctiveStentingIntraCranialType">
+                            <span>Which type</span>
+                        </label>
+                    </div>
+
+                    <input type="text" value="" class="text-widget textline-field" name="adjunctiveStentingIntraCranialType" id="adjunctiveStentingIntraCranialType"></div>
+
+                <div class="datagridwidget-block-ticiScoreAfterThisDevice text-widget int-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="ticiScoreAfterThisDevice">
+                            <span>TICI score after this device</span>
+
+                        </label>
+                    </div>
+
+                    <input type="text" value="" class="text-widget int-field" name="ticiScoreAfterThisDevice" id="ticiScoreAfterThisDevice"></div>
+
+                <div class="datagridwidget-block-wasSuccessful select-widget choice-field datagridwidget-block">
+                    <div class="label-wrapper">
+                        <label for="wasSuccessful">
+                            <span>Was this device successful?</span>
+
+                        </label>
+                    </div>
+
+                    <select size="1" class="select-widget choice-field" name="wasSuccessful" id="wasSuccessful">
+                        <option value="--NOVALUE--" id="wasSuccessful-novalue">no value</option>
+                        <option value="yes" id="wasSuccessful-0">Yes</option>
+                        <option value="no" id="wasSuccessful-1">No</option>
+                        <option value="uncertain" id="wasSuccessful-2">Unknown</option>
+                    </select>
+                    <input type="hidden" value="1" name="wasSuccessful-empty-marker" originalvalue="1"></div>
 
             </div>
-
-            <div class="datagridwidget-block-incubationOfDevice select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="incubationOfDevice">
-                        <span>Incubation of device ≥ 5 min</span>
-
-                    </label>
-                </div>
-
-                <select size="1" class="select-widget choice-field" name="incubationOfDevice" id="incubationOfDevice">
-                    <option value="--NOVALUE--" id="incubationOfDevice-novalue">no value</option>
-                    <option value="yes" id="incubationOfDevice-0">Yes</option>
-                    <option value="no" id="incubationOfDevice-1">No</option>
-                    <option value="unknown" id="incubationOfDevice-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="incubationOfDevice-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-angioplasty select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="angioplasty">
-                        <span>Angioplasty</span>
-
-                    </label>
-                </div>
-
-                <select size="1" class="select-widget choice-field" name="angioplasty" id="angioplasty">
-                    <option value="--NOVALUE--" id="angioplasty-novalue">no value</option>
-                    <option value="yes" id="angioplasty-0">Yes</option>
-                    <option value="no" id="angioplasty-1">No</option>
-                    <option value="unknown" id="angioplasty-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="angioplasty-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-angioplastyExtraCranial single-checkbox-widget bool-field datagridwidget-block">
-                <div class="label">
-                    <label for="angioplastyExtraCranial">
-                        <span></span>
-
-                    </label>
-                </div>
-
-                <span class="option">
-                    <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="angioplastyExtraCranial" id="angioplastyExtraCranial-0">
-                    <label for="angioplastyExtraCranial-0">
-                        <span class="label">Extra Cranial</span>
-                    </label>
-                </span>
-                <input type="hidden" value="1" name="angioplastyExtraCranial-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-angioplastyIntraCranial single-checkbox-widget bool-field datagridwidget-block">
-                <div class="label">
-                    <label for="angioplastyIntraCranial">
-                        <span></span>
-
-                    </label>
-                </div>
-
-                <span class="option">
-                    <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="angioplastyIntraCranial" id="angioplastyIntraCranial-0">
-                    <label for="angioplastyIntraCranial-0">
-                        <span class="label">Intra Cranial</span>
-                    </label>
-                </span>
-                <input type="hidden" value="1" name="angioplastyIntraCranial-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-adjunctiveStenting select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="adjunctiveStenting">
-                        <span>Adjunctive stenting</span>
-
-                    </label>
-                </div>
-
-                <select size="1" class="select-widget choice-field" name="adjunctiveStenting" id="adjunctiveStenting">
-                    <option value="--NOVALUE--" id="adjunctiveStenting-novalue">no value</option>
-                    <option value="yes" id="adjunctiveStenting-0">Yes</option>
-                    <option value="no" id="adjunctiveStenting-1">No</option>
-                    <option value="unknown" id="adjunctiveStenting-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="adjunctiveStenting-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-adjunctiveStentingExtraCranial single-checkbox-widget bool-field datagridwidget-block">
-                <div class="label">
-                    <label for="adjunctiveStentingExtraCranial">
-                        <span></span>
-
-                    </label>
-                </div>
-
-                <span class="option">
-                    <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="adjunctiveStentingExtraCranial" id="adjunctiveStentingExtraCranial-0">
-                    <label for="adjunctiveStentingExtraCranial-0">
-                        <span class="label">Extra Cranial</span>
-                    </label>
-                </span>
-                <input type="hidden" value="1" name="adjunctiveStentingExtraCranial-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-adjunctiveStentingExtraCranialType text-widget textline-field datagridwidget-block">
-                <div class="label">
-                    <label for="adjunctiveStentingExtraCranialType">
-                        <span>Which type</span>
-
-                    </label>
-                </div>
-
-                <input type="text" value="" class="text-widget textline-field" name="adjunctiveStentingExtraCranialType" id="adjunctiveStentingExtraCranialType"></div>
-
-            <div class="datagridwidget-block-adjunctiveStentingIntraCranial single-checkbox-widget bool-field datagridwidget-block">
-                <div class="label">
-                    <label for="adjunctiveStentingIntraCranial">
-                        <span></span>
-
-                    </label>
-                </div>
-
-                <span class="option">
-                    <input type="checkbox" value="selected" class="single-checkbox-widget bool-field" name="adjunctiveStentingIntraCranial" id="adjunctiveStentingIntraCranial-0">
-                    <label for="adjunctiveStentingIntraCranial-0">
-                        <span class="label">Intra Cranial</span>
-                    </label>
-                </span>
-                <input type="hidden" value="1" name="adjunctiveStentingIntraCranial-empty-marker" originalvalue="1"></div>
-
-            <div class="datagridwidget-block-adjunctiveStentingIntraCranialType text-widget textline-field datagridwidget-block">
-                <div class="label">
-                    <label for="adjunctiveStentingIntraCranialType">
-                        <span>Which type</span>
-
-                    </label>
-                </div>
-
-                <input type="text" value="" class="text-widget textline-field" name="adjunctiveStentingIntraCranialType" id="adjunctiveStentingIntraCranialType"></div>
-
-            <div class="datagridwidget-block-ticiScoreAfterThisDevice text-widget int-field datagridwidget-block">
-                <div class="label">
-                    <label for="ticiScoreAfterThisDevice">
-                        <span>TICI score after this device</span>
-
-                    </label>
-                </div>
-
-                <input type="text" value="" class="text-widget int-field" name="ticiScoreAfterThisDevice" id="ticiScoreAfterThisDevice"></div>
-
-            <div class="datagridwidget-block-wasSuccessful select-widget choice-field datagridwidget-block">
-                <div class="label">
-                    <label for="wasSuccessful">
-                        <span>Was this device successful?</span>
-
-                    </label>
-                </div>
-
-                <select size="1" class="select-widget choice-field" name="wasSuccessful" id="wasSuccessful">
-                    <option value="--NOVALUE--" id="wasSuccessful-novalue">no value</option>
-                    <option value="yes" id="wasSuccessful-0">Yes</option>
-                    <option value="no" id="wasSuccessful-1">No</option>
-                    <option value="uncertain" id="wasSuccessful-2">Unknown</option>
-                </select>
-                <input type="hidden" value="1" name="wasSuccessful-empty-marker" originalvalue="1"></div>
-
         </div>
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+
         <script src="deps.js"></script>
         <script src="demo.js"></script>
 

@@ -9,6 +9,8 @@ It is a helper library for building complex conditional forms.
 
 * Handle nested decision trees
 
+* Handle list values and multi-value comparisons
+
 * Based on jQuery, compatible down to version jQuery 1.4
 
 How it works
