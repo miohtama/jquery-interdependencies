@@ -151,17 +151,16 @@
         /**
          * Read value from a diffent HTML controls.
          *
-         * Handle
-         *
-         * - text
-         *
-         * - checkbox
-         *
-         * - select
-         *
+         * Handle, text, checkbox, select.
          *
          */
         getControlValue : function(context, control) {
+
+            // Handle checkboxes
+            if(control.attr("type") == "checkbox") {
+                return control.is(":checked");
+            }
+
             return control.val();
         },
 
@@ -278,6 +277,11 @@
          */
         applyRules: function(context, cfg) {
             var i;
+
+            if(cfg.log) {
+                log("Starting evaluation ruleset of " + this.rules.length + " master rules");
+            }
+
             for(i=0; i<this.rules.length; i++) {
                 this.rules[i].applyRule(context, cfg);
             }
