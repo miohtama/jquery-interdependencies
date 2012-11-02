@@ -1,11 +1,11 @@
-all: clean docs
+all: clean docs publish
 
 clean:
 	rm -rf docs
 	mkdir docs
 
 docs:
-	jsduck . --output docs
+	jsduck deps.js --title="jQuery Interdependencies" --output docs --external=jQuery
 
-
-
+publish:
+	./publish-docs.sh

@@ -1,9 +1,15 @@
+.. contents:: :local:
+
 Introduction
 ---------------
 
-**jQuery Interdependencies* is a jQuery plug-in to
-manage HTML form field interdependencies.
-It is a helper library for building complex conditional forms.
+**jQuery Interdependencies** is a Javascript library to
+create rules for managing HTML form field interdependencies.
+It is a helper library for building complex conditional forms
+where fields are shown and hidden depending on values in other fields.
+
+Features
+---------
 
 * Show and hide fields based on other field values
 

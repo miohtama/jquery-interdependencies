@@ -5,7 +5,9 @@
     "use strict";
 
     /**
-     * Microsoft wrapper
+     * Microsoft helper
+     *
+     * @ignore
      */
     function log(msg) {
         if(console && console.log) {
@@ -14,7 +16,9 @@
     }
 
     /**
-     * Sample configuration object
+     * Sample configuration object which can be passed to {@link jQuery.deps#enable}
+     *
+     * @class Configuration
      */
     var configExample = {
 
@@ -26,12 +30,12 @@
 
         /**
          * @cfg hide Callback function hide(elem) for hiding elements
-         * @type {Functoin}
+         * @type {Function}
          */
         hide : null,
 
         /**
-         * @cfg log Write log output of rule applying
+         * @cfg log Write console.log() output of rule applying
          * @type {Boolean}
          */
         log : false
@@ -43,36 +47,52 @@
      * When condition is true then this input and all
      * its children rules' inputs are visible.
      *
-     * Possible conditions:
-     *     "=="  Widget value must be equal to given value
-     *     "any" Widget value must be any of the values in the given value array
-     *     "non-any" Widget value must not be any of the values in the given value array
-     *     "!=" Widget value must not be qual to given value
-     *     "()" Call value as a function(context, controller, ourWidgetValue) and if it's true then the condition is true
-     *     null This input does not have any sub-conditions
+     * Possible condition strings:
      *
-     * @param {String} controller     jQuery expression to match the input
+     *  * **==**  Widget value must be equal to given value
      *
-     * @param {String} condition What input value must be that the rule takes effective.
+     *  * **any** Widget value must be any of the values in the given value array
      *
-     * @param value What value the condition must be to make controlled widgets visible
+     *  * **non-any** Widget value must not be any of the values in the given value array
+     *
+     *  * **!=** Widget value must not be qual to given value
+     *
+     *  * **()** Call value as a function(context, controller, ourWidgetValue) and if it's true then the condition is true
+     *
+     *  * **null** This input does not have any sub-conditions
+     *
+     *
      *
      */
     function Rule(controller, condition, value) {
-        this.controller = controller;
-
-        this.condition = condition;
-
-        this.value = value;
-
-        // Child rules
-        this.rules = [];
-
-        // Controls shown/hidden by this rule
-        this.controls = [];
+        this.init(controller, condition, value);
     }
 
     $.extend(Rule.prototype, {
+
+        /**
+         * @method constructor
+         *
+         * @param {String} controller     jQuery expression to match the `<input>`   source
+         *
+         * @param {String} condition What input value must be that {@link Rule the rule takes effective}.
+         *
+         * @param value Matching value of **controller** when widgets become visible
+         *
+         */
+        init : function(controller, condition, value) {
+            this.controller = controller;
+
+            this.condition = condition;
+
+            this.value = value;
+
+            // Child rules
+            this.rules = [];
+
+            // Controls shown/hidden by this rule
+            this.controls = [];
+        },
 
         /**
          * Evaluation engine
@@ -167,6 +187,11 @@
         /**
          * Create a sub-rule.
          *
+         * Example:
+         *
+         *      var masterSwitch = ruleset.createRule("#mechanicalThrombectomyDevice")
+         *      var twoAttempts = masterSwitch.createRule("#numberOfAttempts", "==", 2);
+         *
          * @return Rule instance
          */
         createRule : function(controller, condition, value) {
@@ -189,9 +214,7 @@
          *
          * @param  {jQuery} context  jQuery selection within we operate
          * @param  {Object} cfg      Configuration object or empty object
-         * @param  {Object} enforced Recursive rule enforcer: undefined to evaluate condition,
-         *                           true show always,
-         *                           false hide always
+         * @param  {Object} enforced Recursive rule enforcer: undefined to evaluate condition, true show always, false hide always
          *
          */
         applyRule : function(context, cfg, enforced) {
@@ -261,6 +284,12 @@
 
     $.extend(Ruleset.prototype, {
 
+        /**
+         * Add a new rule into this ruletset.
+         *
+         * See  {@link Rule} about the contstruction parameters.
+         * @return {Rule}
+         */
         createRule : function(controller, condition, value) {
             var rule = new Rule(controller, condition, value);
             this.rules.push(rule);
@@ -287,7 +316,10 @@
         },
 
         /**
-         * Make this ruleset effective on the whole page
+         * Make this ruleset effective on the whole page.
+         *
+         * Set event handler on **window.document** to catch all input events
+         * and apply those events to defined rules.
          */
         install : function(cfg) {
             $.deps.enable($(document), this, cfg);
@@ -296,15 +328,37 @@
 
     });
 
+    /**
+     * jQuery interdependencie plug-in
+     *
+     * @class jQuery.deps
+     *
+     */
     var deps = {
 
+        /**
+         * Create a new Ruleset instance.
+         *
+         * Example:
+         *
+         *      $(document).ready(function() {
+         *           // Start creating a new ruleset
+         *           var ruleset = $.deps.createRuleset();
+         *
+         *
+         * @return {Ruleset}
+         */
         createRuleset : function() {
             return new Ruleset();
         },
 
-        apply : function(cfg) {
-        },
 
+        /**
+         * Enable ruleset on a specific jQuery selection
+         * @param  {Object} selection jQuery selection
+         * @param  {Ruleset} ruleset
+         * @param  {Configuration} cfg
+         */
         enable : function(selection, ruleset, cfg) {
 
             cfg = cfg || {};
