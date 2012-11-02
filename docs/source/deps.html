@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*global console, window*/
+
+(function($) {
+
+    &quot;use strict&quot;;
+
+<span id='global-method-log'>    /**
+</span>     * Microsoft helper
+     *
+     * @ignore
+     */
+    function log(msg) {
+        if(console &amp;&amp; console.log) {
+            console.log(msg);
+        }
+    }
+
+<span id='Configuration'>    /**
+</span>     * Sample configuration object which can be passed to {@link jQuery.deps#enable}
+     *
+     * @class Configuration
+     */
+    var configExample = {
+
+<span id='Configuration-property-show'>        /**
+</span>         * @cfg show Callback function show(elem) for showing elements
+         * @type {Function}
+         */
+        show : null,
+
+<span id='Configuration-property-hide'>        /**
+</span>         * @cfg hide Callback function hide(elem) for hiding elements
+         * @type {Function}
+         */
+        hide : null,
+
+<span id='Configuration-property-log'>        /**
+</span>         * @cfg log Write console.log() output of rule applying
+         * @type {Boolean}
+         */
+        log : false
+    };
+
+<span id='Rule'>    /**
+</span>     * Define one field inter-dependency rule.
+     *
+     * When condition is true then this input and all
+     * its children rules' inputs are visible.
+     *
+     * Possible condition strings:
+     *
+     *  * **==**  Widget value must be equal to given value
+     *
+     *  * **any** Widget value must be any of the values in the given value array
+     *
+     *  * **non-any** Widget value must not be any of the values in the given value array
+     *
+     *  * **!=** Widget value must not be qual to given value
+     *
+     *  * **()** Call value as a function(context, controller, ourWidgetValue) and if it's true then the condition is true
+     *
+     *  * **null** This input does not have any sub-conditions
+     *
+     *
+     *
+     */
+    function Rule(controller, condition, value) {
+        this.init(controller, condition, value);
+    }
+
+    $.extend(Rule.prototype, {
+
+<span id='Rule-method-constructor'>        /**
+</span>         * @method constructor
+         *
+         * @param {String} controller     jQuery expression to match the &lt;input&gt; source
+         *
+         * @param {String} condition What input value must be that {@link Rule the rule takes effective}.
+         *
+         * @param value What value the condition must be to make controlled widgets visible
+         *
+         */
+        init : function(controller, condition, value) {
+            this.controller = controller;
+
+            this.condition = condition;
+
+            this.value = value;
+
+            // Child rules
+            this.rules = [];
+
+            // Controls shown/hidden by this rule
+            this.controls = [];
+        },
+
+<span id='Rule-method-evalCondition'>        /**
+</span>         * Evaluation engine
+         *
+         * @param  {String} condition Any of given conditions in Rule class description
+         * @param  {Object} val1      The base value we compare against
+         * @param  {Object} val2      Something we got out of input
+         * @return {Boolean}          true or false
+         */
+        evalCondition : function(control, context, condition, val1, val2) {
+
+           if(this.condition == &quot;==&quot;) {
+                return val1 == val2;
+            } else if(condition == &quot;!=&quot;) {
+                return val1 != val2;
+            } else if(condition == &quot;()&quot;) {
+                return val1(context, control, val2);
+            } else if(condition == &quot;any&quot;) {
+                return val1.indexOf(val2) &gt;= 0;
+            } else if(condition == &quot;not-any&quot;) {
+                return val1.indexOf(val2) &lt; 0;
+            } else {
+                throw new Error(&quot;Unknown condition:&quot; + condition);
+            }
+
+        },
+
+<span id='Rule-method-checkCondition'>        /**
+</span>         * Evaluate the condition of this rule in given jQuery context.
+         *
+         * The widget value is extracted using getControlValue()
+         *
+         * @param {jQuery} context The jQuery selection in which this rule is evaluated.
+         *
+         */
+        checkCondition : function(context, cfg) {
+
+            // We do not have condition set, we are always true
+            if(!this.condition) {
+                return true;
+            }
+
+            var control = context.find(this.controller);
+            if(control.size() === 0 &amp;&amp; cfg.log) {
+                log(&quot;Evaling condition: Could not find controller input &quot; + this.controller);
+            }
+
+            var val = this.getControlValue(context, control);
+            if(cfg.log &amp;&amp; val === undefined) {
+                log(&quot;Evaling condition: Could not exctract value from input &quot; + this.controller);
+            }
+
+            if(val === undefined) {
+                return false;
+            }
+
+            val = this.normalizeValue(control, this.value, val);
+
+            return this.evalCondition(context, this.control, this.condition, this.value, val);
+        },
+
+<span id='Rule-method-normalizeValue'>        /**
+</span>         * Make sure that what we read from input field is comparable against Javascript primitives
+         *
+         */
+        normalizeValue : function(control, baseValue, val) {
+
+            if(typeof baseValue == &quot;number&quot;) {
+                // Make sure we compare numbers against numbers
+                return parseFloat(val);
+            }
+
+            return val;
+        },
+
+<span id='Rule-method-getControlValue'>        /**
+</span>         * Read value from a diffent HTML controls.
+         *
+         * Handle, text, checkbox, select.
+         *
+         */
+        getControlValue : function(context, control) {
+
+            // Handle checkboxes
+            if(control.attr(&quot;type&quot;) == &quot;checkbox&quot;) {
+                return control.is(&quot;:checked&quot;);
+            }
+
+            return control.val();
+        },
+
+<span id='Rule-method-createRule'>        /**
+</span>         * Create a sub-rule.
+         *
+         * Example:
+         *
+         *      var masterSwitch = ruleset.createRule(&quot;#mechanicalThrombectomyDevice&quot;)
+         *      var twoAttempts = masterSwitch.createRule(&quot;#numberOfAttempts&quot;, &quot;==&quot;, 2);
+         *
+         * @return Rule instance
+         */
+        createRule : function(controller, condition, value) {
+            var rule = new Rule(controller, condition, value);
+            this.rules.push(rule);
+            return rule;
+        },
+
+<span id='Rule-method-include'>        /**
+</span>         * Include a control in this rule.
+         *
+         * @param  {String} input     jQuery expression to match the input within ruleset context
+         */
+        include : function(input) {
+            this.controls.push(input);
+        },
+
+<span id='Rule-method-applyRule'>        /**
+</span>         * Apply this rule to all controls in the given context
+         *
+         * @param  {jQuery} context  jQuery selection within we operate
+         * @param  {Object} cfg      Configuration object or empty object
+         * @param  {Object} enforced Recursive rule enforcer: undefined to evaluate condition, true show always, false hide always
+         *
+         */
+        applyRule : function(context, cfg, enforced) {
+
+            var result;
+
+            if(enforced === undefined) {
+                result = this.checkCondition(context, cfg);
+            } else {
+                result = enforced;
+            }
+
+            if(cfg.log) {
+                log(&quot;Applying rule on &quot; + this.controller + &quot;==&quot; + this.value + &quot; enforced:&quot; + enforced + &quot; result:&quot; + result);
+            }
+
+            // Get show/hide callback functions
+
+            var show = cfg.show || function(control) {
+                control.show();
+            };
+
+            var hide = cfg.show || function(control) {
+                control.hide();
+            };
+
+
+            // Resolve controls from ids to jQuery selections
+            // we are controlling in this context
+            var controls = $.map(this.controls, function(elem, idx) {
+                return context.find(elem);
+            });
+
+            if(result) {
+
+                $(controls).each(function() {
+                    show(this);
+                });
+
+                // Evaluate all child rules
+                $(this.rules).each(function() {
+                    this.applyRule(context, cfg);
+                });
+
+            } else {
+
+                $(controls).each(function() {
+                    hide(this);
+                });
+
+                // Supress all child rules
+                $(this.rules).each(function() {
+                    this.applyRule(context, cfg, false);
+                });
+            }
+        }
+    });
+
+<span id='Ruleset'>    /**
+</span>     * A class which manages interdependenice rules.
+     */
+    function Ruleset() {
+
+        // Hold a tree of rules
+        this.rules = [];
+    }
+
+    $.extend(Ruleset.prototype, {
+
+<span id='Ruleset-method-createRule'>        /**
+</span>         * Add a new rule into this ruletset.
+         *
+         * See  {@link Rule} about the contstruction parameters.
+         * @return {Rule}
+         */
+        createRule : function(controller, condition, value) {
+            var rule = new Rule(controller, condition, value);
+            this.rules.push(rule);
+            return rule;
+        },
+
+<span id='Ruleset-method-applyRules'>        /**
+</span>         * Apply these rules on an element.
+         *
+         * @param context jQuery selection we are dealing with
+         *
+         * @param cfg Configuration object.
+         */
+        applyRules: function(context, cfg) {
+            var i;
+
+            if(cfg.log) {
+                log(&quot;Starting evaluation ruleset of &quot; + this.rules.length + &quot; master rules&quot;);
+            }
+
+            for(i=0; i&lt;this.rules.length; i++) {
+                this.rules[i].applyRule(context, cfg);
+            }
+        },
+
+<span id='Ruleset-method-install'>        /**
+</span>         * Make this ruleset effective on the whole page.
+         *
+         * Set event handler on **window.document** to catch all input events
+         * and apply those events to defined rules.
+         */
+        install : function(cfg) {
+            $.deps.enable($(document), this, cfg);
+        }
+
+
+    });
+
+<span id='jQuery-deps'>    /**
+</span>     * jQuery interdependencie plug-in
+     *
+     * @class jQuery.deps
+     *
+     */
+    var deps = {
+
+<span id='jQuery-deps-method-createRuleset'>        /**
+</span>         * Create a new Ruleset instance.
+         *
+         * Example:
+         *
+         *      $(document).ready(function() {
+         *           // Start creating a new ruleset
+         *           var ruleset = $.deps.createRuleset();
+         *
+         *
+         * @return {Ruleset}
+         */
+        createRuleset : function() {
+            return new Ruleset();
+        },
+
+
+<span id='jQuery-deps-method-enable'>        /**
+</span>         * Enable ruleset on a specific jQuery selection
+         * @param  {Object} selection jQuery selection
+         * @param  {Ruleset} ruleset
+         * @param  {Configuration} cfg
+         */
+        enable : function(selection, ruleset, cfg) {
+
+            cfg = cfg || {};
+
+            var self = this;
+            var val = selection.live(&quot;change&quot;, function() {
+                ruleset.applyRules(selection, cfg);
+            });
+
+            ruleset.applyRules(selection, cfg);
+
+            return val;
+        }
+    };
+
+    $.deps = deps;
+
+})(jQuery);</pre>
+</body>
+</html>

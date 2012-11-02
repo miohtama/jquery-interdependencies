@@ -19,6 +19,15 @@ Features
 
 * Based on jQuery, compatible down to version jQuery 1.4
 
+Demos
+------
+
+* `Minimal demo <http://miohtama.github.com/jquery-interdependencies/minimal.html>`_ (see code below)
+
+* `Real-life example <http://miohtama.github.com/jquery-interdependencies/index.html>`_
+
+* `API documentation <http://miohtama.github.com/jquery-interdependencies/docs/>`_
+
 How it works
 -----------------
 
@@ -38,25 +47,74 @@ The architecture is based on jQuery plug-in and prototypial class patterns.
 Minimal example
 -------------------
 
-::
-
-    ADD HTML CODE HERE
-
+Below is an minimal example how to create a form ruleset with two rules.
 
 ::
 
-    ADD JAVASCRIPT CODE HERE
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+        </head>
+        <body>
 
-Running the demo
-----------------------
+            <div class="container">
 
-See the demo in the action ... OMG HERE IS NO URL YET ....
+                <label>Diet</label>
+                <select id="diet">
+                    <option value="normal">Normal</option>
+                    <option value="special">Special considerations</option>
+                </select>
 
-Running the demo (OSX poem)::
+                <div id="special-diet" style="margin-left: 2em">
+                    <label for="text">
+                        What kind of considerations
+                    </label>
+                    <input type="text" id="text" />
+                </div>
 
-    git clone
-    python -m SimpleHTTPServer
-    open "http://localhost:8000"
+                <div>
+                    <label>
+                        <span>Stay in hotel?</span>
+                        <input type="checkbox" id="accomodation">
+                    </label>
+                </div>
+
+                <div id="adults" style="margin-left: 2em">
+                    <label>Number of adults</label>
+                    <input type="number" />
+                </div>
+
+                <div id="children" style="margin-left: 2em">
+                    <label>Number of children (younger than 12-years-old)</label>
+                    <input type="number" />
+                </div>
+
+            </div>
+
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+            <script src="deps.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // Start creating a new ruleset
+                    var ruleset = $.deps.createRuleset();
+
+                    // Show diet text input option only when special diet option is selected
+                    var dietRule = ruleset.createRule("#diet", "==", "special");
+                    dietRule.include("#special-diet");
+
+                    // Make these fields visible when user checks hotel accomodation
+                    var hotelRule = ruleset.createRule("#accomodation", "==", true);
+                    hotelRule.include("#adults");
+                    hotelRule.include("#children");
+
+                    // Make the ruleset effective on the whole page
+                    ruleset.install();
+                });
+            </script>
+        </body>
+    </html>
+
 
 Compiling docs
 ---------------
@@ -69,9 +127,14 @@ Install jsduck::
 Build docs::
 
     source /Users/mikko/.rvm/scripts/rvm
-    make
+    make docs
+
+Deploy docs::
+
+    make deploy-docs
 
 Author
 ------
 
-`Mikko Ohtamaa <http://opensourcehacker.com>`_
+`Mikko Ohtamaa <http://opensourcehacker.com>`_ (`Twitter <http://twitter.com/moo9000>`_)
+
