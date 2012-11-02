@@ -13,7 +13,7 @@ SOURCE=`pwd`
 
 TARGET=/tmp/docs-dist
 
-rm -rf $TARGET/gh-pages
+rm -rf $TARGET
 install -d $TARGET/gh-pages
 
 echo "Entering $TARGET"
@@ -25,7 +25,7 @@ cd gh-pages
 # CSS issues: https://github.com/blog/572-bypassing-jekyll-on-github-pages
 touch .nojekyll
 # docs/ is on gitignore by default
-cp -r $SOURCE .
+cp -r $SOURCE/* .
 rm .gitignore > /dev/null
 git add -A
 git commit -m "Updated gh-pages with new docs"

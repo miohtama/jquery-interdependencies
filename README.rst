@@ -19,10 +19,10 @@ Features
 
 * Based on jQuery, compatible down to version jQuery 1.4
 
-Demes
+Demos
 ------
 
-* `Minimal demo <http://miohtama.github.com/jquery-interdependencies/minimal.html>`_
+* `Minimal demo <http://miohtama.github.com/jquery-interdependencies/minimal.html>`_ (see code below)
 
 * `Real-life example <http://miohtama.github.com/jquery-interdependencies/index.html>`_
 
