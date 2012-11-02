@@ -16,7 +16,7 @@
     /**
      * Sample configuration object
      */
-    var cfg = {
+    var configExample = {
 
         /**
          * @cfg show Callback function show(elem) for showing elements
@@ -204,7 +204,6 @@
                 result = enforced;
             }
 
-
             if(cfg.log) {
                 log("Applying rule on " + this.controller + "==" + this.value + " enforced:" + enforced + " result:" + result);
             }
@@ -285,6 +284,13 @@
             for(i=0; i<this.rules.length; i++) {
                 this.rules[i].applyRule(context, cfg);
             }
+        },
+
+        /**
+         * Make this ruleset effective on the whole page
+         */
+        install : function(cfg) {
+            $.deps.enable($(document), this, cfg);
         }
 
 

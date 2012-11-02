@@ -1,8 +1,11 @@
-all: docs
+all: clean docs
 
-prepare-duck:
-	gem install jsduck
+clean:
+	rm -rf docs
+	mkdir docs
 
-docs: prepare-duck
+docs:
 	jsduck . --output docs
+
+
 

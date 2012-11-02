@@ -52,6 +52,19 @@ Running the demo (OSX poem)::
     python -m SimpleHTTPServer
     open "http://localhost:8000"
 
+Compiling docs
+---------------
+
+Install jsduck::
+
+     \curl -L https://get.rvm.io | bash -s stable --ruby --gems=jsduck
+     source /Users/mikko/.rvm/scripts/rvm
+
+Build docs::
+
+    source /Users/mikko/.rvm/scripts/rvm
+    make
+
 Author
 ------
 

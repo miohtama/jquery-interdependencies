@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+        <div class="container">
+
+            <label>Diet</label>
+            <select id="diet">
+                <option value="normal">Normal</option>
+                <option value="special">Special considerations</option>
+            </select>
+
+            <div id="special-diet" style="margin-left: 2em">
+                <label for="text">
+                    What kind of considerations
+                </label>
+                <input type="text" id="text" />
+            </div>
+
+            <div>
+                <label>
+                    <span>Stay in hotel?</span>
+                    <input type="checkbox" id="accomodation">
+                </label>
+            </div>
+
+            <div id="adults" style="margin-left: 2em">
+                <label>Number of adults</label>
+                <input type="number" />
+            </div>
+
+            <div id="children" style="margin-left: 2em">
+                <label>Number of children (younger than 12-years-old)</label>
+                <input type="number" />
+            </div>
+
+        </div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="deps.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Start creating a new ruleset
+                var ruleset = $.deps.createRuleset();
+
+                // Show diet text input option only when special diet option is selected
+                var dietRule = ruleset.createRule("#diet", "==", "special");
+                dietRule.include("#special-diet");
+
+                // Make these fields visible when user checks hotel accomodation
+                var hotelRule = ruleset.createRule("#accomodation", "==", true);
+                hotelRule.include("#adults");
+                hotelRule.include("#children");
+
+                // Make the ruleset effective on the whole page
+                ruleset.install();
+            });
+        </script>
+    </body>
+</html>
