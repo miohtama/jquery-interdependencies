@@ -3,14 +3,16 @@
 Introduction
 ---------------
 
-**jQuery Interdependencies** is a Javascript library to
-create rules for managing HTML form field interdependencies.
-It is a helper library for building complex conditional forms
-where fields are shown and hidden depending on values in other fields.
+**jQuery Interdependencies** is a Javascript library for
+creating rules for form field interdependencies.
+It is a helper library for building conditions telling
+when fields are shown and hidden based on the values of the other fields on the same form.
 
 Use simple Javascript based rules to express dependencies between different fields:
 
 .. image :: https://github.com/downloads/miohtama/jquery-interdependencies/interdependencies.png
+
+If this doesn't make sense `see the real-life example <http://miohtama.github.com/jquery-interdependencies/index.html>`_.
 
 Features
 ---------
@@ -19,9 +21,17 @@ Features
 
 * Handle nested decision trees
 
-* Handle list values and multi-value comparisons
+* Handle list values and multi-value comparisons (any of compared values, none of compared values)
+
+* Independent of any backend code or HTML structure - you can use jQuery Interdependencies with any form library
 
 * Based on jQuery, compatible down to version jQuery 1.4
+
+* API documentation
+
+* Eager and robust error checking detects mistakes early on
+
+* Crafted with the state of the art Javascript practices, from Finland with love
 
 Demos
 ------
