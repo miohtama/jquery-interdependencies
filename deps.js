@@ -5,7 +5,7 @@
     "use strict";
 
     /**
-     * Microsoft helper
+     * Microsoft safe helper to spit out our little diagnostics information
      *
      * @ignore
      */
@@ -38,7 +38,18 @@
          * @cfg log Write console.log() output of rule applying
          * @type {Boolean}
          */
-        log : false
+        log : false,
+
+
+        /**
+         * @cfg checkTargets When ruleset is enabled, check that all controllers and controls referred by ruleset exist on the page.
+         *
+         * @default true
+         *
+         * @type {Boolean}
+         */
+        checkTargets : true
+
     };
 
     /**
@@ -213,7 +224,7 @@
          * Apply this rule to all controls in the given context
          *
          * @param  {jQuery} context  jQuery selection within we operate
-         * @param  {Object} cfg      Configuration object or empty object
+         * @param  {Object} cfg      {@link Configuration} object or undefined
          * @param  {Object} enforced Recursive rule enforcer: undefined to evaluate condition, true show always, false hide always
          *
          */
@@ -251,7 +262,15 @@
             if(result) {
 
                 $(controls).each(function() {
+
+                    // Some friendly debug info
+                    if(cfg.log && this.size() === 0) {
+                        log("Control selection is empty:" + this);
+                        log(this);
+                    }
+
                     show(this);
+
                 });
 
                 // Evaluate all child rules
@@ -299,15 +318,17 @@
         /**
          * Apply these rules on an element.
          *
-         * @param context jQuery selection we are dealing with
+         * @param {jQuery} context Selection we are dealing with
          *
-         * @param cfg Configuration object.
+         * @param cfg {@link Configuration} object or undefined.
          */
         applyRules: function(context, cfg) {
             var i;
 
+            cfg = cfg || {};
+
             if(cfg.log) {
-                log("Starting evaluation ruleset of " + this.rules.length + " master rules");
+                log("Starting evaluation ruleset of " + this.rules.length + " rules");
             }
 
             for(i=0; i<this.rules.length; i++) {
@@ -316,15 +337,82 @@
         },
 
         /**
+         * Walk all rules and sub-rules in this ruleset
+         * @param  {Function} callback(rule)
+         *
+         * @return {Array} Rules as depth-first searched
+         */
+        walk : function() {
+
+            var rules = [];
+
+            function descent(rule) {
+
+                rules.push(rule);
+
+                $(rule.children).each(function() {
+                    descent(this);
+                });
+            }
+
+            $(this.rules).each(function() {
+                descent(this);
+            });
+
+            return rules;
+        },
+
+
+        /**
+         * Check that all controllers and controls referred in ruleset exist.
+         *
+         * Throws an Error if any of them are missing.
+         *
+         * @param  {Configuration} cfg
+         */
+        checkTargets : function(context, cfg) {
+
+            var controls = 0;
+            var rules = this.walk();
+
+            $(rules).each(function() {
+
+                if(context.find(this.controller).size() === 0) {
+                    throw new Error("Rule's controller does not exist:" + this);
+                }
+
+                if(this.controls.length === 0) {
+                    throw new Error("Rule has no controls:" + this);
+                }
+
+                $(this.controls).each(function() {
+                    if(context.find(this).size() === 0) {
+                        throw new Error("Rule's target control does not exist:" + this);
+                    }
+
+                    controls++;
+                });
+
+            });
+
+            if(cfg.log) {
+                log("Controller check ok, rules count " + rules.length + " controls count " + controls);
+            }
+
+        },
+
+        /**
          * Make this ruleset effective on the whole page.
          *
          * Set event handler on **window.document** to catch all input events
          * and apply those events to defined rules.
+         *
+         * @param  {Configuration} cfg {@link Configuration} object or undefined
+         *
          */
         install : function(cfg) {
-            $.deps.enable($(document), this, cfg);
+            $.deps.enable($(document.body), this, cfg);
         }
-
 
     });
 
@@ -354,8 +442,14 @@
 
 
         /**
-         * Enable ruleset on a specific jQuery selection
-         * @param  {Object} selection jQuery selection
+         * Enable ruleset on a specific jQuery selection.
+         *
+         * Checks the existince of all ruleset controllers and controls
+         * by default (see config).
+         *
+         * See possible IE event bubbling problems: http://stackoverflow.com/q/265074/315168
+         *
+         * @param  {Object} selection jQuery selection in where we monitor all change events. All controls and controllers must exist within this selection.
          * @param  {Ruleset} ruleset
          * @param  {Configuration} cfg
          */
@@ -363,8 +457,19 @@
 
             cfg = cfg || {};
 
+            if(cfg.checkTargets || cfg.checkTargets === undefined) {
+                ruleset.checkTargets(selection, cfg);
+            }
+
             var self = this;
-            var val = selection.live("change", function() {
+
+            if(cfg.log) {
+                log("Enabling dependency change monitoring on " + selection.get(0));
+            }
+
+            // Namespace our handler to avoid conflicts
+            //
+            var val = selection.live("change.deps", function() {
                 ruleset.applyRules(selection, cfg);
             });
 
