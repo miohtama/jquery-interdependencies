@@ -147,6 +147,11 @@ Deploy docs::
 
     make publish-docs
 
+Elsewhere
+-----------
+
+* `JSter <http://jster.net/library/jquery-interdependencies>`_
+
 Author
 ------
 
