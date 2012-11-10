@@ -10,7 +10,7 @@ when fields are shown and hidden based on the values of the other fields on the 
 
 Use simple Javascript based rules to express dependencies between different fields:
 
-.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/bacon.gif
+.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/interdependencies.png
 
 If this doesn't make sense `see the real-life example <http://miohtama.github.com/jquery-interdependencies/index.html>`_.
 
