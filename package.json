@@ -15,11 +15,14 @@
     }
   ],
   "demos": [
-    "index.html",
-    "minimal.html"
+    "/index.html",
+    "/minimal.html"
   ],
+ "bugs": {
+    "web": "https://github.com/miohtama/jquery-interdependencies/issues"
+  },
   "dependencies": {
-    "": ""
+    "jquery": "1.4"
   },
   "repositories": [
     {
