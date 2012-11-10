@@ -1,6 +1,6 @@
 {
   "name": "jquery-interdependencies",
-  "version": "1.0",
+  "version": "1.0.0",
   "main": "deps.js",
   "readmeFilename": "README.rst",
   "description": "A Javascript library for dynamically showing and hiding HTML form fields based on rules and field interdependencies",
