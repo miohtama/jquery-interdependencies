@@ -6,5 +6,5 @@
   "description": "A Javascript library for dynamically showing and hiding HTML form fields based on rules and field interdependencies",
   "dependencies": {
     "jquery": ">=1.4.0"
-  },
+  }
 }
