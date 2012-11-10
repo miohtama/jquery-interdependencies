@@ -42,6 +42,13 @@ Demos
 
 * `API documentation <http://miohtama.github.com/jquery-interdependencies/docs/>`_
 
+Installation
+-------------
+
+Put ``deps.js`` in your application.
+
+The module is also available as ``jquery-interdependencies`` through `bower <http://twitter.github.com/bower/>`_.
+
 How it works
 -----------------
 
