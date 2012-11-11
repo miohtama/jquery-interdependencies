@@ -217,6 +217,11 @@
          * @param  {String} input     jQuery expression to match the input within ruleset context
          */
         include : function(input) {
+
+            if(!input) {
+                throw new Error("Must give an input selector");
+            }
+
             this.controls.push(input);
         },
 
@@ -242,6 +247,10 @@
                 log("Applying rule on " + this.controller + "==" + this.value + " enforced:" + enforced + " result:" + result);
             }
 
+            if(cfg.log && !this.controls.length) {
+                log("Zero length controls slipped through");
+            }
+
             // Get show/hide callback functions
 
             var show = cfg.show || function(control) {
@@ -256,21 +265,25 @@
             // Resolve controls from ids to jQuery selections
             // we are controlling in this context
             var controls = $.map(this.controls, function(elem, idx) {
-                return context.find(elem);
+                var control = context.find(elem);
+                if(cfg.log && control.size() === 0) {
+                    log("Could not find element:" + elem);
+                }
+                return control;
             });
 
             if(result) {
 
                 $(controls).each(function() {
 
+
                     // Some friendly debug info
-                    if(cfg.log && this.size() === 0) {
-                        log("Control selection is empty:" + this);
+                    if(cfg.log && $(this).size() === 0) {
+                        log("Control selection is empty when showing");
                         log(this);
                     }
 
                     show(this);
-
                 });
 
                 // Evaluate all child rules
@@ -281,6 +294,13 @@
             } else {
 
                 $(controls).each(function() {
+
+                    // Some friendly debug info
+                    if(cfg.log && $(this).size() === 0) {
+                        log("Control selection is empty when hiding:");
+                        log(this);
+                    }
+
                     hide(this);
                 });
 

@@ -10,9 +10,17 @@ when fields are shown and hidden based on the values of the other fields on the 
 
 Use simple Javascript based rules to express dependencies between different fields:
 
+Example:
+
 .. image :: https://github.com/downloads/miohtama/jquery-interdependencies/bacon.gif
 
-If this doesn't make sense `see the real-life example <http://miohtama.github.com/jquery-interdependencies/index.html>`_.
+Another, very complex, real-life example which led to building this library.
+This one has a master ruleset and and one ruleset applied per dynamically added
+subform:
+
+.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/mtd3.gif
+
+See below for demo links.
 
 Features
 ---------
