@@ -8,7 +8,7 @@ creating rules for form field interdependencies.
 It is a helper library for building conditions telling
 when fields are shown and hidden based on the values of the other fields on the same form.
 
-Use simple Javascript based rules to express dependencies between different fields:
+Use simple Javascript based rules to express dependencies between different fields.
 
 Example:
 
@@ -25,21 +25,21 @@ See below for demo links.
 Features
 ---------
 
-* Show and hide fields based on other field values
+* It is not limited to an input type, but works with all HTML controls: text, checkbox, radio button, select dropdown, etc.
 
-* Handle nested decision trees
+* It correctly handles nested decision trees, where your form 1st level choice reveals 2nd level choices which in turn reveal 3rd level choices and so on
 
 * Handle list values and multi-value comparisons (any of compared values, none of compared values)
 
 * Independent of any backend code or HTML structure - you can use jQuery Interdependencies with any form library
 
-* Based on jQuery, compatible down to version jQuery 1.4
+* `API documentation <http://miohtama.github.com/jquery-interdependencies/docs/>`_ based on `JSDuck <https://github.com/senchalabs/jsduck/>`_
 
-* API documentation
+* Eager and robust error checking detecting your mistakes early as possible
 
-* Eager and robust error checking detects mistakes early on
+* jQuery, compatible down to version jQuery 1.4
 
-* Crafted with the state of the art Javascript practices, from Finland with love
+* Crafted with the state of the art Javascript best practices, from Finland with love
 
 Demos
 ------
