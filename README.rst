@@ -167,6 +167,8 @@ Elsewhere
 
 * `JSter <http://jster.net/library/jquery-interdependencies>`_
 
+* `Bower <http://twitter.github.com/bower/>`_
+
 Author
 ------
 
