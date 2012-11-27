@@ -167,7 +167,13 @@ Elsewhere
 
 * `JSter <http://jster.net/library/jquery-interdependencies>`_
 
+* `JSPkg <http://jspkg.com/packages/jquery-interdependencies/>`_
+
 * `Bower <http://twitter.github.com/bower/>`_
+
+* `Open Source Hacker <http://opensourcehacker.com/2012/11/19/create-complex-form-field-showing-and-hiding-rules-with-jquery-interdependencies-library/>`_
+
+* `DailyJS <http://dailyjs.com/2012/11/20/jquery-roundup/>`_
 
 Author
 ------
