@@ -398,7 +398,7 @@
             $(rules).each(function() {
 
                 if(context.find(this.controller).size() === 0) {
-                    throw new Error("Rule's controller does not exist:" + this);
+                    throw new Error("Rule's controller does not exist:" + this.controller);
                 }
 
                 if(this.controls.length === 0) {
