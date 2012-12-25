@@ -15,6 +15,36 @@
         }
     }
 
+
+    /**
+     * jQuery.find() workaround for IE7
+     *
+     * If your selector is an pure tag id (#foo) IE7 finds nothing
+     * if you do jQuery.find() in a specific jQuery context.
+     *
+     * This workaround makes a (false) assumptions
+     * ids are always unique across the page.
+     *
+     * @ignore
+     *
+     * @param  {jQuery} context  jQuery context where we look child elements
+     * @param  {String} selector selector as a string
+     * @return {jQuery}          context.find() result
+     */
+    function safeFind(context, selector) {
+
+        if(selector[0] == "#") {
+
+            // Pseudo-check that this is a simple id selector
+            // and not a complex jQuery selector
+            if(selector.indexOf(" ") < 0) {
+                return $(selector);
+            }
+        }
+
+        return context.find(selector);
+    }
+
     /**
      * Sample configuration object which can be passed to {@link jQuery.deps#enable}
      *
@@ -388,6 +418,8 @@
          *
          * Throws an Error if any of them are missing.
          *
+         * @param {jQuery} context jQuery selection of items
+         *
          * @param  {Configuration} cfg
          */
         checkTargets : function(context, cfg) {
@@ -406,8 +438,9 @@
                 }
 
                 $(this.controls).each(function() {
-                    if(context.find(this).size() === 0) {
-                        throw new Error("Rule's target control does not exist:" + this);
+
+                    if(safeFind(context, this) === 0) {
+                        throw new Error("Rule's target control " + this + " does not exist in context " + context.get(0));
                     }
 
                     controls++;
