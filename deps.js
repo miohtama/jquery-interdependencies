@@ -152,9 +152,9 @@
             } else if(condition == "()") {
                 return val1(context, control, val2);
             } else if(condition == "any") {
-                return $.inArray(val2, val1);
+                return $.inArray(val2, val1) > -1;
             } else if(condition == "not-any") {
-                return !$.inArray(val2, val1);
+                return $.inArray(val2, val1) == -1;
             } else {
                 throw new Error("Unknown condition:" + condition);
             }
