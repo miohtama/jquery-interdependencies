@@ -287,7 +287,7 @@
                 control.show();
             };
 
-            var hide = cfg.show || function(control) {
+            var hide = cfg.hide || function(control) {
                 control.hide();
             };
 
