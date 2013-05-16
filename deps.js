@@ -522,9 +522,8 @@
 
             // Namespace our handler to avoid conflicts
             //
-            var val = selection.live("change.deps", function() {
-                ruleset.applyRules(selection, cfg);
-            });
+            var handler = function() { ruleset.applyRules(selection, cfg); };
+            var val = selection.on ? selection.on("change.deps", null, null, handler) : selection.live("change.deps", handler);
 
             ruleset.applyRules(selection, cfg);
 
