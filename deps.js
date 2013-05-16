@@ -1,3 +1,11 @@
+/**
+ * jQuery Interdependencies library
+ *
+ * http://miohtama.github.com/jquery-interdependencies/
+ *
+ * Copyright 2012-2013 Mikko Ohtamaa, others
+ */
+
 /*global console, window*/
 
 (function($) {
