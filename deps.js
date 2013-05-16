@@ -212,13 +212,13 @@
         /**
          * Read value from a diffent HTML controls.
          *
-         * Handle, text, checkbox, select.
+         * Handle, text, checkbox, radio, select.
          *
          */
         getControlValue : function(context, control) {
 
-            // Handle checkboxes
-            if(control.attr("type") == "checkbox") {
+            // Handle checkboxes & radio
+            if (control.attr("type") == "checkbox" || control.attr("type") == "radio") {
                 return control.is(":checked");
             }
 
