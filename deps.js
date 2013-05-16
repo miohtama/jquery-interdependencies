@@ -225,7 +225,13 @@
          */
         getControlValue : function(context, control) {
 
-            // Handle checkboxes & radio
+            // Handle radio button group
+            if(control.attr("type") == "radio" && control.size() > 1) {
+                var value = control.filter(":checked").val();
+                return value;
+            }
+
+            // Handle individual checkboxes & radio
             if (control.attr("type") == "checkbox" || control.attr("type") == "radio") {
                 return control.is(":checked");
             }

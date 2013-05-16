@@ -138,7 +138,7 @@ Below is an minimal example how to create a form ruleset with two rules.
                     hotelRule.include("#children");
 
                     // Make the ruleset effective on the whole page
-                    ruleset.install();
+                    ruleset.install({log: true});
                 });
             </script>
         </body>
@@ -178,5 +178,6 @@ Elsewhere
 Author
 ------
 
-`Mikko Ohtamaa <http://opensourcehacker.com>`_ (`Twitter <http://twitter.com/moo9000>`_)
+Mikko Ohtamaa (`blog <https://opensourcehacker.com>`_, `Facebook <https://www.facebook.com/?q=#/pages/Open-Source-Hacker/181710458567630>`_, `Twitter <https://twitter.com/moo9000>`_, `Google+ <https://plus.google.com/u/0/103323677227728078543/>`_)
+
 
