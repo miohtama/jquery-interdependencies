@@ -151,7 +151,7 @@
          * @param  {Object} val2      Something we got out of input
          * @return {Boolean}          true or false
          */
-        evalCondition : function(control, context, condition, val1, val2) {
+        evalCondition : function(context, control, condition, val1, val2) {
 
            if(this.condition == "==") {
                 return val1 == val2;
@@ -200,7 +200,7 @@
 
             val = this.normalizeValue(control, this.value, val);
 
-            return this.evalCondition(context, this.control, this.condition, this.value, val);
+            return this.evalCondition(context, control, this.condition, this.value, val);
         },
 
         /**
