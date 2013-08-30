@@ -275,13 +275,14 @@
          * @param  {jQuery} context  jQuery selection within we operate
          * @param  {Object} cfg      {@link Configuration} object or undefined
          * @param  {Object} enforced Recursive rule enforcer: undefined to evaluate condition, true show always, false hide always
-         *
+         * @param  {Object} execute Should the rule be executed directly or only save the result to the element ? (Default: true)
          */
-        applyRule : function(context, cfg, enforced) {
+        applyRule : function(context, cfg, enforced, execute) {
 
             var result;
+            execute = (typeof(execute) == "undefined") ? true : execute;
 
-            if(enforced === undefined) {
+            if(typeof(enforced) == "undefined") {
                 result = this.checkCondition(context, cfg);
             } else {
                 result = enforced;
@@ -304,8 +305,7 @@
             var hide = cfg.hide || function(control) {
                 control.hide();
             };
-
-
+            
             // Resolve controls from ids to jQuery selections
             // we are controlling in this context
             var controls = $.map(this.controls, function(elem, idx) {
@@ -326,8 +326,22 @@
                         log("Control selection is empty when showing");
                         log(this);
                     }
-
-                    show(this);
+                    
+                    var visible = $.data(this[0], "deps.visible");
+                    
+                    /* combine the current value with the new result
+                     * making sure that the result will only be true
+                     * if all rules applied to the same control resulted
+                     * in true.
+                     */                    
+                    //TODO: make the operator configurable per ruleset (&& / ||)
+                    visible = visible && result;
+                    $.data(this[0], "deps.visible", visible);
+                    
+                    if(execute){
+                    	show(this);
+                    }
+                    	
                 });
 
                 // Evaluate all child rules
@@ -344,15 +358,21 @@
                         log("Control selection is empty when hiding:");
                         log(this);
                     }
+                    
+                    var visible = $.data(this[0], "deps.visible");
+                    visible = visible && result;
+                    $.data(this[0], "deps.visible", visible);
 
-                    hide(this);
+                    if(execute){
+                    	hide(this);
+                    }                    
                 });
 
                 // Supress all child rules
                 $(this.rules).each(function() {
                     this.applyRule(context, cfg, false);
                 });
-            }
+            }                        
         }
     });
 
@@ -394,9 +414,45 @@
             if(cfg.log) {
                 log("Starting evaluation ruleset of " + this.rules.length + " rules");
             }
+            
+            // Get show/hide callback functions
 
+            var show = cfg.show || function(control) {
+                control.show();
+            };
+
+            var hide = cfg.hide || function(control) {
+                control.hide();
+            };
+
+            // go through all controls of all rules
             for(i=0; i<this.rules.length; i++) {
-                this.rules[i].applyRule(context, cfg);
+            	for(var con = 0; con < this.rules[i].controls.length; con++){
+            		var control = this.rules[i].controls[con];
+            		//set the property "deps.visible" to true (reset) on each control
+            		$.data($(control)[0], "deps.visible", true);
+            	}
+            }
+            
+            // apply the rule (not executing it)
+            for(i=0; i<this.rules.length; i++) {
+                this.rules[i].applyRule(context, cfg, undefined, false);
+            }
+            
+            // no again go through all controls and execute the result
+            for(i=0; i<this.rules.length; i++) {
+            	for(var con = 0; con < this.rules[i].controls.length; con++){
+            		var control = this.rules[i].controls[con];
+            		var $control = $(control);
+            		
+            		var visible = $.data($control[0], "deps.visible");
+            		
+            		if(visible){
+            			show($control);
+            		}else{
+            			hide($control);
+            		}
+            	}
             }
         },
 
