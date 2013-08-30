@@ -18,7 +18,7 @@
      * @ignore
      */
     function log(msg) {
-        if(console && console.log) {
+        if(window.console && window.console.log) {
             console.log(msg);
         }
     }
