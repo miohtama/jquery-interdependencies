@@ -12,13 +12,13 @@ Use simple Javascript based rules to express dependencies between different fiel
 
 Example:
 
-.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/bacon.gif
+.. image :: https://cloud.github.com/downloads/miohtama/jquery-interdependencies/bacon.gif
 
 Another, very complex, real-life example which led to building this library.
 This one has a master ruleset and and one ruleset applied per dynamically added
 subform:
 
-.. image :: https://github.com/downloads/miohtama/jquery-interdependencies/mtd3.gif
+.. image :: https://cloud.github.com/downloads/miohtama/jquery-interdependencies/mtd3.gif
 
 See below for demo links.
 
