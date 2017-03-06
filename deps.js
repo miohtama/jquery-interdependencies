@@ -191,7 +191,7 @@
 
             var val = this.getControlValue(context, control);
             if(cfg.log && val === undefined) {
-                log("Evaling condition: Could not exctract value from input " + this.controller);
+                log("Evaling condition: Could not extract value from input " + this.controller);
             }
 
             if(val === undefined) {
@@ -341,7 +341,7 @@
 
                     // Some friendly debug info
                     if(cfg.log && $(this).size() === 0) {
-                        log("Control selection is empty when hiding:");
+                        log("Control selection is empty when hiding");
                         log(this);
                     }
 
